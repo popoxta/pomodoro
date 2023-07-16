@@ -1,8 +1,8 @@
 export default function Header() {
     return (
-        <header>
-            <h1 className={'text-6xl font-bold text-amber-950'}><span className={'text-red-700'}>POMO</span>DORO 🍅</h1>
-            <h2 className={'text-xl font-medium self-start text-gray-600 pl-0.5'}>Your tomato timer buddy</h2>
+        <header className={'mt-16'}>
+            <h1 className={'text-5xl font-bold text-slate-900'}>Pomo Buddy</h1>
+            <h2 className={'font-medium text-red-700 ml-1 -mt-1.5'}>Your little tomato study-buddy</h2>
         </header>
     )
 }
