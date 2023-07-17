@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {Timer} from "../types/timer.ts";
+import Tomato from "./Tomato.tsx";
 
 const ONE_SECOND: 1000 = 1000
 const ONE_MINUTE: number = 60 * ONE_SECOND
@@ -23,6 +24,13 @@ const POMO_TIMES: {
     }
 }
 
+/**
+ * Returns the relevant pomo timer / set based on the current pomodoro count.
+ * If even, returns WORK
+ * If uneven, returns SHORT_BREAK
+ * If 7, returns LONG_BREAK
+ * @param nextPomoCount
+ */
 function calculatePomo(nextPomoCount: number): Timer {
     return nextPomoCount === 7
         ? POMO_TIMES.LONG_BREAK
@@ -47,7 +55,7 @@ export default function PomodoroTimer() {
         if (!isPaused && timeRemaining > 0) {
             const timer: number = setInterval(
                 () => setTimeRemaining((prev: number) => prev - ONE_SECOND),
-                1000
+                ONE_SECOND
             )
             return () => clearInterval(timer)
         }
@@ -56,14 +64,15 @@ export default function PomodoroTimer() {
     if (timeRemaining === 0) {
         if (!isPaused) setIsPaused(true)
         const nextPomoCount: number = pomosElapsed === 7 ? 0 : pomosElapsed + 1
-        setPomosElapsed(nextPomoCount)
         setTimeRemaining(calculatePomo(nextPomoCount).time)
+        setPomosElapsed(nextPomoCount)
     }
 
     const togglePause = () => setIsPaused(!isPaused)
 
     return (
         <section className={'flex flex-col place-items-center'}>
+            <Tomato pomosElapsed={pomosElapsed}/>
             <div>
                 <h3 className={'text-red-700 text-3xl font-bold'}>
                     {minutes}:{seconds}
