@@ -1,24 +1,47 @@
 import {useEffect, useState} from "react";
+import {Timer} from "../types/timer.ts";
 
 const ONE_SECOND: 1000 = 1000
 const ONE_MINUTE: number = 60 * ONE_SECOND
 
-const POMO_TIMES = {
-    WORK: (25 * ONE_MINUTE),
-    LONG_BREAK: (15 * ONE_MINUTE),
-    SHORT_BREAK: (5 * ONE_MINUTE)
+const POMO_TIMES: {
+    WORK: Timer,
+    LONG_BREAK: Timer,
+    SHORT_BREAK: Timer
+} = {
+    WORK: {
+        text: 'Time to work!',
+        time: (0.3 * ONE_MINUTE)
+    },
+    LONG_BREAK: {
+        text: 'Time for a long break!',
+        time: (0.2 * ONE_MINUTE)
+    },
+    SHORT_BREAK: {
+        text: 'Time to rest!',
+        time: (0.1 * ONE_MINUTE)
+    }
 }
 
-export default function Timer() {
-    const [timeRemaining, setTimeRemaining] = useState(POMO_TIMES.WORK)
-    const [pomosElapsed, setPomosElapsed] = useState(6)
+function calculatePomo(nextPomoCount: number): Timer {
+    return nextPomoCount === 7
+        ? POMO_TIMES.LONG_BREAK
+        : nextPomoCount % 2 !== 0
+            ? POMO_TIMES.SHORT_BREAK
+            : POMO_TIMES.WORK
+}
+
+export default function PomodoroTimer() {
+    const [timeRemaining, setTimeRemaining] = useState(POMO_TIMES.WORK.time)
+    const [pomosElapsed, setPomosElapsed] = useState(0)
     const [isPaused, setIsPaused] = useState(true)
 
     const formattedTimeRemaining: Date = new Date(timeRemaining)
     const minutes: string = String(formattedTimeRemaining.getMinutes())
     const seconds: string = String(formattedTimeRemaining.getSeconds()).padStart(2, "0")
 
-    console.log(`pomos elapsed : ${pomosElapsed}`)
+    const currentPomo: Timer = calculatePomo(pomosElapsed)
+    const pomosUntilBreak: number = 4 - Math.ceil((pomosElapsed) / 2);
 
     useEffect(() => {
         if (!isPaused && timeRemaining > 0) {
@@ -34,15 +57,7 @@ export default function Timer() {
         if (!isPaused) setIsPaused(true)
         const nextPomoCount: number = pomosElapsed === 7 ? 0 : pomosElapsed + 1
         setPomosElapsed(nextPomoCount)
-        setTimeRemaining(getNextPomo(nextPomoCount))
-    }
-
-    function getNextPomo(nextPomoCount: number): number {
-        return nextPomoCount === 7
-            ? POMO_TIMES.LONG_BREAK
-            : nextPomoCount % 2 !== 0
-                ? POMO_TIMES.SHORT_BREAK
-                : POMO_TIMES.WORK
+        setTimeRemaining(calculatePomo(nextPomoCount).time)
     }
 
     const togglePause = () => setIsPaused(!isPaused)
@@ -60,8 +75,13 @@ export default function Timer() {
             </div>
             <hr className={'w-64 h-0.5 border-slate-300 my-5'}/>
             <div className={'text-center'}>
-                <h4 className={'text-2xl font-bold text-slate-900'}>Time to work!</h4>
-                <p className={'text-slate-900'}>2 Pomos left until your break!</p>
+                <h4 className={'text-2xl font-bold text-slate-900'}>{currentPomo.text}</h4>
+                <p className={'text-slate-900'}>
+                    {pomosUntilBreak > 0
+                        ? `${pomosUntilBreak} Pomos left until your break!`
+                        : 'Enjoy your well-deserved long break!'
+                    }
+                </p>
             </div>
         </section>
     )
