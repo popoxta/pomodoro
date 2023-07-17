@@ -1,4 +1,19 @@
+import {useEffect, useState} from "react";
+
 export default function Timer() {
+    const ONE_SECOND = 1000
+    const ONE_MINUTE = 60 * ONE_SECOND
+
+    const POMO_TIME: number = 25 * ONE_MINUTE
+    const LONG_BREAK: number = 15 * ONE_MINUTE
+    const SHORT_BREAK: number = 5 * ONE_MINUTE
+
+    const [time, setTime] = useState(POMO_TIME)
+    const [pomosElapsed, setPomosElapsed] = useState(0)
+    const [isPaused, setIsPaused] = useState(true)
+    
+   console.log(time)
+
     return (
         <section className={'flex flex-col place-items-center'}>
             <div>
