@@ -12,15 +12,15 @@ const POMO_TIMES: {
 } = {
     WORK: {
         text: 'Time to work!',
-        time: (0.3 * ONE_MINUTE)
+        time: (25 * ONE_MINUTE)
     },
     LONG_BREAK: {
         text: 'Time for a long break!',
-        time: (0.2 * ONE_MINUTE)
+        time: (15 * ONE_MINUTE)
     },
     SHORT_BREAK: {
         text: 'Time to rest!',
-        time: (0.1 * ONE_MINUTE)
+        time: (5 * ONE_MINUTE)
     }
 }
 
