@@ -24,7 +24,7 @@ export default function Tomato({pomosElapsed}: { pomosElapsed: number }) {
     }
 
     return (
-        <div className={'flex flex-row gap-5 justify-center place-items-center mt-24 mb-20'}>
+        <div className={'flex flex-col gap-5 justify-center place-items-center my-8 sm:my-16 sm:flex-row'}>
             <img className={'w-60'} src={isBreak ? tomatoes.rest : tomatoes.work} alt={'Cute Pomodoro'}/>
             <div className={'bg-slate-200 mt-3 px-6 py-7 rounded-lg w-80'}>
                 <p>{quote}</p>
