@@ -2,7 +2,10 @@ export default function Timer() {
     return (
         <section className={'flex flex-col place-items-center'}>
             <div>
-                <h3 className={'text-red-700 text-3xl font-bold'}>12:26</h3>
+                <h3 className={'text-red-700 text-3xl font-bold'}>
+                    12:26
+                    <i className={'fa-solid fa-play ml-3 text-slate-400 hover:text-slate-500 cursor-pointer transition-colors'}/>
+                </h3>
             </div>
             <hr className={'w-64 h-0.5 border-slate-300 my-5'}/>
             <div className={'text-center'}>
