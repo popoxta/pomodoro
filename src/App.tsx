@@ -3,7 +3,7 @@ import PomodoroTimer from "./components/PomodoroTimer.tsx";
 
 export default function App() {
     return (
-        <main className={'h-screen bg-slate-50 flex flex-col place-items-center'}>
+        <main className={'h-full bg-slate-50 flex flex-col place-items-center'}>
             <Header/>
             <PomodoroTimer/>
         </main>
